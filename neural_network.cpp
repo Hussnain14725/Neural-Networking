@@ -79,3 +79,14 @@ Layer runNN(NeuralNet NN)
 
     return NN.layers[NN.layers.size() - 1];
 }
+class Checkpoint
+{
+public:
+    sf::RectangleShape rect;
+    sf::Color color = sf::Color::Red;
+    int numero;
+
+    std::array<sf::Vector2f, 4> pointsPosition;
+
+    void init(sf::Vector2f center, sf::Vector2f size, float orientation, int num);
+};
