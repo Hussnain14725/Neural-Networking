@@ -90,3 +90,31 @@ public:
 
     void init(sf::Vector2f center, sf::Vector2f size, float orientation, int num);
 };
+void Checkpoint::init(sf::Vector2f center, sf::Vector2f size, float orientation, int num)
+{
+    // create rect
+    rect.setSize(size);
+    rect.setOrigin(sf::Vector2f(size.x / 2, size.y / 2));
+    rect.setRotation(orientation * 57.29);
+    rect.setPosition(center);
+    rect.setFillColor(color);
+
+    // checkpoint's index
+    numero = num;
+
+    // fill points position
+    sf::Vector2f v1 = vectAngle(orientation);
+    sf::Vector2f v2 = sf::Vector2f(v1.y * -1, v1.x); // v1 + pi/2
+
+    // scale the vectors so they can reach the angles of the rect
+    v1.x *= size.x / 2;
+    v1.y *= size.x / 2;
+    v2.x *= size.y / 2;
+    v2.y *= size.y / 2;
+
+    sf::Vector2f p1, p2;
+    pointsPosition[0] = addVectors2f(addVectors2f(center, v1), v2);
+    pointsPosition[1] = subVectors2f(addVectors2f(center, v1), v2);
+    pointsPosition[2] = subVectors2f(subVectors2f(center, v1), v2);
+    pointsPosition[3] = addVectors2f(subVectors2f(center, v1), v2);
+}
