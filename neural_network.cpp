@@ -118,3 +118,26 @@ void Checkpoint::init(sf::Vector2f center, sf::Vector2f size, float orientation,
     pointsPosition[2] = subVectors2f(subVectors2f(center, v1), v2);
     pointsPosition[3] = addVectors2f(subVectors2f(center, v1), v2);
 }
+bool pointInRect(sf::Vector2f& p1, Checkpoint& c)
+{
+    // check if p1 is in a checkpoint
+    sf::Vector2f a, b, d;
+    a = c.pointsPosition[0];
+    b = c.pointsPosition[1];
+    d = c.pointsPosition[3];
+    float bax = b.x - a.x;
+    float bay = b.y - a.y;
+    float dax = d.x - a.x;
+    float day = d.y - a.y;
+
+    if ((p1.x - a.x) * bax + (p1.y - a.y) * bay < 0)
+        return false;
+    if ((p1.x - b.x) * bax + (p1.y - b.y) * bay > 0)
+        return false;
+    if ((p1.x - a.x) * dax + (p1.y - a.y) * day < 0)
+        return false;
+    if ((p1.x - d.x) * dax + (p1.y - d.y) * day > 0)
+        return false;
+
+    return true;
+}
