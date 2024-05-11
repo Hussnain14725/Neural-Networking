@@ -207,3 +207,23 @@ void Car::init(sf::Vector2f pos, sf::Vector2f ori)
     NN.layers.push_back(l5);
 }
 
+float Car::distWall(float angle, sf::Image& Img)
+{
+    float a = angleVect(orientation) + angle;
+
+    sf::Vector2f tp;
+    sf::Vector2f vect = sf::Vector2f(cos(a), sin(a));
+    float dist = 5;
+    bool test = false;
+
+    while (dist < viewDist and !test)
+    {
+        dist *= 1.5;
+        tp.x = vect.x * dist + position.x;
+        tp.y = vect.y * dist + position.y;
+        test = Img.getPixel(fmax(0, fmin(tp.x, 1919)), fmax(0, fmin(tp.y, 1079))) == sf::Color(0, 0, 0);
+    }
+
+    return dist;
+}
+
