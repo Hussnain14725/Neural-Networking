@@ -1,7 +1,19 @@
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
 #include <thread>
 #include <array>
+
+float dist(float x1, float y1, float x2, float y2) { return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)); }
+sf::Vector2f addVectors2f(sf::Vector2f v1, sf::Vector2f v2) { return sf::Vector2f(v1.x + v2.x, v1.y + v2.y); }
+sf::Vector2f subVectors2f(sf::Vector2f v1, sf::Vector2f v2) { return sf::Vector2f(v1.x - v2.x, v1.y - v2.y); }
+sf::Vector2f multVectors2f(sf::Vector2f v1, sf::Vector2f v2) { return sf::Vector2f(v1.x * v2.x, v1.y * v2.y); }
+sf::Vector2f normalizeVector2f(sf::Vector2f v1)
+{
+    float d = dist(0, 0, v1.x, v1.y);
+    return sf::Vector2f(v1.x / d, v1.y / d);
+}
+
 class Layer
 {
 public:
