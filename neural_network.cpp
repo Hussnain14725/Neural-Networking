@@ -270,4 +270,38 @@ float Car::distWall(float angle, sf::Image& Img)
 
     return dist;
 }
+void Car::killCar(float addScore, std::vector<Car>& BestCars)
+{
+    score += addScore / 3;
+    isdead = true;
+
+    for (int i = 0; i < BestCars.size(); i++)
+    {
+        if (score > BestCars[i].score)
+        {
+            BestCars[i].NN = NN;
+            BestCars[i].score = score;
+            return;
+        }
+    }void Car::update(sf::Image& Img, std::vector<Checkpoint>& checkpoints, std::vector<Car>& BestCars)
+{
+    if (!isdead && (life <= 0))
+    {
+        killCar(maxlife / 3, BestCars);
+    }
+
+    if (!isdead)
+    {
+        NN.layers[0].values[0] = distWall(-3.141592 / 3, Img);
+        NN.layers[0].values[1] = distWall(-3.141592 / 4, Img);
+        NN.layers[0].values[2] = distWall(-3.141592 / 6, Img);
+        NN.layers[0].values[3] = distWall(0, Img);
+        NN.layers[0].values[4] = distWall(3.141592 / 6, Img);
+        NN.layers[0].values[5] = distWall(3.141592 / 4, Img);
+        NN.layers[0].values[6] = distWall(3.141592 / 3, Img);
+        NN.layers[0].values[7] = angleVect(orientation) / 10;
+        NN.layers[0].values[8] = speedVect.x / 5;
+        NN.layers[0].values[9] = speedVect.y / 5;
+
+
 
