@@ -13,6 +13,38 @@ sf::Vector2f normalizeVector2f(sf::Vector2f v1)
     float d = dist(0, 0, v1.x, v1.y);
     return sf::Vector2f(v1.x / d, v1.y / d);
 }
+float dotProductVectors2f(sf::Vector2f v1, sf::Vector2f v2) { return v1.x * v2.x + v1.y * v2.y; };
+float angleVect(sf::Vector2f v)
+{
+    if (v.x == 0)
+    {
+        return 3.141592 / 2 * abs(v.y) / v.y;
+    };
+    if (v.y == 0)
+    {
+        return 3.141592 + 3.141592 * abs(v.x) / v.x;
+    };
+    return atan2(v.y, v.x);
+}
+sf::Vector2f vectAngle(float a) { return sf::Vector2f(cos(a), sin(a)); }
+
+void write(sf::RenderWindow& window, std::string t1, sf::Vector3f v, sf::Color col)
+{
+    // load font
+    sf::Font font;
+    font.loadFromFile("../fonts/Anton-Regular.ttf");
+
+    // create the text element
+    sf::Text text(t1, font);
+    text.setStyle(sf::Text::Bold);
+    text.setFillColor(col);
+
+    text.setCharacterSize(v.z);
+
+    text.setPosition(sf::Vector2f(v.x, v.y));
+
+    window.draw(text);
+}
 
 class Layer
 {
